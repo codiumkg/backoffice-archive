@@ -7,6 +7,7 @@ import CustomInput from "../shared/CustomInput/CustomInput";
 import Typography from "../shared/Typography/Typography";
 import styles from "./Login.module.scss";
 import { ILogin } from "@/interfaces/auth";
+import login from "@/requests/auth/login";
 
 const initialValues = {
   username: "",
@@ -24,10 +25,14 @@ export default function Login() {
     mode: "onChange",
   });
 
-  const { showErrorNotification } = useNotification();
+  const { showErrorNotification, showSuccessNotification } = useNotification();
 
   const onSubmit: SubmitHandler<LoginForm> = (data: ILogin) => {
-    showErrorNotification("Неверный логин или пароль");
+    login(data)
+      .then(() => {
+        showSuccessNotification();
+      })
+      .catch(() => showErrorNotification("Неверный логин или пароль"));
   };
 
   return (
