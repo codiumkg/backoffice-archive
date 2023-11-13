@@ -1,8 +1,9 @@
-import { HTMLInputTypeAttribute } from "react";
+import { HTMLInputTypeAttribute, InputHTMLAttributes } from "react";
 import styles from "./CustomInput.module.scss";
+import { UseFormRegister } from "react-hook-form";
 
-interface Props {
-  name?: string;
+interface Props extends InputHTMLAttributes<HTMLInputElement> {
+  name: string;
   value?: string;
   type?: HTMLInputTypeAttribute;
   placeholder?: string;
@@ -15,11 +16,12 @@ export default function CustomInput({
   placeholder,
   label,
   type,
+  ...rest
 }: Props) {
   return (
     <div className={styles.container}>
       {!!label && <label htmlFor={name}>{label}</label>}
-      <input name={name} value={value} placeholder={placeholder} type={type} />
+      <input {...rest} value={value} placeholder={placeholder} type={type} />
     </div>
   );
 }
