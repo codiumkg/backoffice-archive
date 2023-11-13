@@ -1,0 +1,15 @@
+.primary {
+  outline: none;
+  border: none;
+  background: var(--accent-color);
+  color: var(--text-color-dark);
+  min-width: 120px;
+  min-height: 40px;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.disabled {
+  background: var(--accent-color-dark);
+}

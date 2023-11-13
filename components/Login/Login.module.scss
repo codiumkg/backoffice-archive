@@ -1,0 +1,17 @@
+.card {
+  background: var(--secondary-color);
+  width: clamp(280px, 50vw, 420px);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--highlight-color);
+}
+
+.heading {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.highlight {
+  color: var(--accent-color);
+  font-weight: bold;
+}

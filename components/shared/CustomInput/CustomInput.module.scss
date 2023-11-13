@@ -1,0 +1,26 @@
+.container {
+  width: 100%;
+  min-height: 46px;
+  padding: 6px 14px;
+  background: var(--primary-color);
+  border-radius: 12px;
+  border: 1px solid var(--highlight-color);
+  margin-bottom: 16px;
+
+  label {
+    font-size: 12px;
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+
+  input {
+    font-size: 14px;
+    font-weight: 500;
+    outline: none;
+    background: none;
+    border: none;
+    height: 100%;
+    width: 100%;
+    color: var(--text-color);
+  }
+}
