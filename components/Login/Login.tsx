@@ -12,9 +12,10 @@ import { ILogin } from "@/interfaces/auth";
 import login from "@/requests/auth/login";
 
 import styles from "./Login.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/constants/routes";
+import checkStatus from "@/requests/auth/checkStatus";
 
 export const loginValidationSchema = Yup.object({
   username: Yup.string()
@@ -37,6 +38,16 @@ interface LoginForm {
 }
 
 export default function Login() {
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      checkStatus().then(() => {
+        router.replace(ROUTES.HOME);
+      });
+    }
+  }, []);
+
   const loginForm = useForm<LoginForm>({
     defaultValues: initialValues,
     resolver: yupResolver(loginValidationSchema),
