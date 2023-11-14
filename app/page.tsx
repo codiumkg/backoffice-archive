@@ -1,19 +1,18 @@
 "use client";
 
 import Typography from "@/components/shared/Typography/Typography";
-import { useNotification } from "@/hooks/useNotification";
 import checkStatus from "@/requests/auth/checkStatus";
 import { redirect } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Home() {
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-    redirect("/login");
-  }
-
   useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      redirect("/login");
+    }
+
     checkStatus().catch(() => redirect("/login"));
   }, []);
 
