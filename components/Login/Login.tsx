@@ -1,13 +1,28 @@
 "use client";
 
+import * as Yup from "yup";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useNotification } from "@/hooks/useNotification";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { isEmpty } from "lodash-es";
+
 import Button from "../shared/Button/Button";
 import CustomInput from "../shared/CustomInput/CustomInput";
 import Typography from "../shared/Typography/Typography";
-import styles from "./Login.module.scss";
+import { useNotification } from "@/hooks/useNotification";
 import { ILogin } from "@/interfaces/auth";
 import login from "@/requests/auth/login";
+
+import styles from "./Login.module.scss";
+
+export const loginValidationSchema = Yup.object({
+  username: Yup.string()
+    .min(3, "Логин должен быть не менее 3 символов")
+    .max(32, "Логин должен быть не более 32 символов")
+    .required("Это поле обязательное"),
+  password: Yup.string()
+    .min(6, "Пароль должен быть не менее 6 символов")
+    .required("Это поле обязательное"),
+});
 
 const initialValues = {
   username: "",
@@ -22,6 +37,7 @@ interface LoginForm {
 export default function Login() {
   const loginForm = useForm<LoginForm>({
     defaultValues: initialValues,
+    resolver: yupResolver(loginValidationSchema),
     mode: "onChange",
   });
 
@@ -29,11 +45,17 @@ export default function Login() {
 
   const onSubmit: SubmitHandler<LoginForm> = (data: ILogin) => {
     login(data)
-      .then(() => {
+      .then((res) => {
+        localStorage.setItem("token", res.token);
+
         showSuccessNotification();
       })
       .catch(() => showErrorNotification("Неверный логин или пароль"));
   };
+
+  const isValid = isEmpty(loginForm.formState.errors);
+
+  console.log(loginForm.formState.errors);
 
   return (
     <div>
@@ -47,18 +69,22 @@ export default function Login() {
           <CustomInput
             label="Логин"
             placeholder="Введите логин..."
+            errorMessage={loginForm.formState.errors.username?.message}
             {...loginForm.register("username")}
-            onChange={(e) => loginForm.setValue("username", e.target.value)}
           />
           <CustomInput
             label="Пароль"
             placeholder="Введите пароль..."
             type="password"
+            errorMessage={loginForm.formState.errors.password?.message}
             {...loginForm.register("password")}
-            onChange={(e) => loginForm.setValue("password", e.target.value)}
           />
 
-          <Button text="Войти" type="submit" />
+          <Button
+            text="Войти"
+            type="submit"
+            disabled={!isValid || !loginForm.formState.isDirty}
+          />
         </form>
       </div>
     </div>

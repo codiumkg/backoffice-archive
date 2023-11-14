@@ -7,7 +7,7 @@
   min-height: 40px;
   width: 100%;
   padding: 8px 12px;
-  border-radius: 8px;
+  border-radius: var(--secondary-radius);
   cursor: pointer;
 }
 

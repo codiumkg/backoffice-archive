@@ -2,7 +2,7 @@
   background: var(--secondary-color);
   width: clamp(280px, 50vw, 420px);
   padding: 20px;
-  border-radius: 12px;
+  border-radius: var(--primary-radius);
   border: 1px solid var(--highlight-color);
 }
 

@@ -1,10 +1,9 @@
 .container {
   width: 100%;
   min-height: 46px;
-  padding: 6px 14px;
+  padding: 8px 16px;
   background: var(--primary-color);
-  border-radius: 12px;
-  border: 1px solid var(--highlight-color);
+  border-radius: var(--primary-radius);
   margin-bottom: 16px;
 
   label {
@@ -20,7 +19,12 @@
     border: none;
     height: 100%;
     width: 100%;
-    padding: 4px 0;
+    margin: 6px 0;
     color: var(--text-color);
   }
+}
+
+.error {
+  margin-left: 12px;
+  margin-bottom: 16px;
 }

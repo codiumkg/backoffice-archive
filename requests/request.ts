@@ -17,7 +17,7 @@ export default async function request({ url, method = "GET", body }: Options) {
   });
 
   if (!response.ok) {
-    throw Error("Неверный логин или пароль");
+    throw Error();
   }
 
   const data = await response.json();
