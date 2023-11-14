@@ -3,7 +3,6 @@
 import * as Yup from "yup";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { isEmpty } from "lodash-es";
 
 import Button from "../shared/Button/Button";
 import CustomInput from "../shared/CustomInput/CustomInput";
@@ -14,6 +13,8 @@ import login from "@/requests/auth/login";
 
 import styles from "./Login.module.scss";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "@/constants/routes";
 
 export const loginValidationSchema = Yup.object({
   username: Yup.string()
@@ -39,10 +40,13 @@ export default function Login() {
   const loginForm = useForm<LoginForm>({
     defaultValues: initialValues,
     resolver: yupResolver(loginValidationSchema),
-    mode: "onChange",
+    mode: "onBlur",
   });
 
+  const router = useRouter();
+
   const [isLoading, setIsLoading] = useState(false);
+
   const { showErrorNotification, showSuccessNotification } = useNotification();
 
   const onSubmit: SubmitHandler<LoginForm> = (data: ILogin) => {
@@ -51,15 +55,14 @@ export default function Login() {
       .then((res) => {
         localStorage.setItem("token", res.token);
 
+        router.replace(ROUTES.HOME);
         showSuccessNotification();
       })
       .catch(() => showErrorNotification("Неверный логин или пароль"))
       .finally(() => setIsLoading(false));
   };
 
-  const isValid = isEmpty(loginForm.formState.errors);
-
-  console.log(loginForm.formState.errors);
+  const { isDirty, isValid } = loginForm.formState;
 
   return (
     <div>
@@ -88,7 +91,7 @@ export default function Login() {
             text="Войти"
             type="submit"
             isLoading={isLoading}
-            disabled={!isValid || !loginForm.formState.isDirty || isLoading}
+            disabled={!isValid || !isDirty || isLoading}
           />
         </form>
       </div>
