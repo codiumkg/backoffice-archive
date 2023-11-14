@@ -1,4 +1,6 @@
 .primary {
+  display: grid;
+  place-content: center;
   outline: none;
   border: none;
   background: var(--accent-color);

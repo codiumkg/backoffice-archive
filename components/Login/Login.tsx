@@ -13,6 +13,7 @@ import { ILogin } from "@/interfaces/auth";
 import login from "@/requests/auth/login";
 
 import styles from "./Login.module.scss";
+import { useState } from "react";
 
 export const loginValidationSchema = Yup.object({
   username: Yup.string()
@@ -41,16 +42,19 @@ export default function Login() {
     mode: "onChange",
   });
 
+  const [isLoading, setIsLoading] = useState(false);
   const { showErrorNotification, showSuccessNotification } = useNotification();
 
   const onSubmit: SubmitHandler<LoginForm> = (data: ILogin) => {
+    setIsLoading(true);
     login(data)
       .then((res) => {
         localStorage.setItem("token", res.token);
 
         showSuccessNotification();
       })
-      .catch(() => showErrorNotification("Неверный логин или пароль"));
+      .catch(() => showErrorNotification("Неверный логин или пароль"))
+      .finally(() => setIsLoading(false));
   };
 
   const isValid = isEmpty(loginForm.formState.errors);
@@ -83,7 +87,8 @@ export default function Login() {
           <Button
             text="Войти"
             type="submit"
-            disabled={!isValid || !loginForm.formState.isDirty}
+            isLoading={isLoading}
+            disabled={!isValid || !loginForm.formState.isDirty || isLoading}
           />
         </form>
       </div>
