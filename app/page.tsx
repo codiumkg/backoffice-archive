@@ -18,7 +18,7 @@ export default function Home() {
       redirect(ROUTES.LOGIN);
     }
 
-    if (!isFetching && userData?.role !== Role.ADMIN) {
+    if (!isFetching && userData?.role === Role.STUDENT) {
       redirect("404");
     }
   }, [isLoggedIn, userData, isFetching]);
