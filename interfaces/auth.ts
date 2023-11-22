@@ -13,3 +13,7 @@ export interface IUserData {
   username: string;
   role: Role;
 }
+
+export interface ILoginResponse {
+  token: string;
+}
