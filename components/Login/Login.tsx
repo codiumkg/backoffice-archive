@@ -15,7 +15,7 @@ import styles from "./Login.module.scss";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/constants/routes";
-import checkStatus from "@/requests/auth/checkStatus";
+import useAuth from "@/hooks/useAuth";
 
 export const loginValidationSchema = Yup.object({
   username: Yup.string()
@@ -38,15 +38,15 @@ interface LoginForm {
 }
 
 export default function Login() {
-  useEffect(() => {
-    const token = localStorage.getItem("token");
+  const { isLoggedIn } = useAuth();
 
-    if (token) {
-      checkStatus().then(() => {
-        router.replace(ROUTES.HOME);
-      });
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isLoggedIn()) {
+      router.replace(ROUTES.HOME);
     }
-  }, []);
+  }, [isLoggedIn, router]);
 
   const loginForm = useForm<LoginForm>({
     defaultValues: initialValues,
@@ -54,7 +54,7 @@ export default function Login() {
     mode: "onBlur",
   });
 
-  const router = useRouter();
+  const { setTokenToStorage } = useAuth();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -64,7 +64,7 @@ export default function Login() {
     setIsLoading(true);
     login(data)
       .then((res) => {
-        localStorage.setItem("token", res.token);
+        setTokenToStorage(res.token);
 
         router.replace(ROUTES.HOME);
         showSuccessNotification();

@@ -1,25 +1,32 @@
 "use client";
 
 import Typography from "@/components/shared/Typography/Typography";
-import checkStatus from "@/requests/auth/checkStatus";
+import { ROUTES } from "@/constants/routes";
+import useAuth from "@/hooks/useAuth";
+import { Role } from "@/interfaces/auth";
+import { useUserData } from "@/queries/auth";
 import { redirect } from "next/navigation";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 
 export default function Home() {
-  useEffect(() => {
-    const token = localStorage.getItem("token");
+  const { isLoggedIn } = useAuth();
 
-    if (!token) {
-      redirect("/login");
+  const { data: userData, isFetching } = useUserData();
+
+  useLayoutEffect(() => {
+    if (!isLoggedIn()) {
+      redirect(ROUTES.LOGIN);
     }
 
-    checkStatus().catch(() => redirect("/login"));
-  }, []);
+    if (!isFetching && userData?.role !== Role.ADMIN) {
+      redirect("404");
+    }
+  }, [isLoggedIn, userData, isFetching]);
 
   return (
     <main className="flex-col center">
-      <Typography variant="h1" weight="700">
-        В разработке...
+      <Typography variant="h1" weight="600">
+        Добро пожаловать в офис!
       </Typography>
     </main>
   );
