@@ -11,6 +11,7 @@
 
   --primary-radius: 16px;
   --secondary-radius: 12px;
+  --extra-radius: 24px;
 }
 
 * { 

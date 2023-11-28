@@ -8,14 +8,14 @@ import Button from "../shared/Button/Button";
 import CustomInput from "../shared/CustomInput/CustomInput";
 import Typography from "../shared/Typography/Typography";
 import { useNotification } from "@/hooks/useNotification";
-import { ILogin } from "@/interfaces/auth";
-import login from "@/requests/auth/login";
-
-import styles from "./Login.module.scss";
+import { ILogin, Role } from "@/interfaces/auth";
+import loginRequest from "@/requests/auth/login";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/constants/routes";
 import useAuth from "@/hooks/useAuth";
+
+import styles from "./Login.module.scss";
 
 export const loginValidationSchema = Yup.object({
   username: Yup.string()
@@ -38,15 +38,21 @@ interface LoginForm {
 }
 
 export default function Login() {
-  const { isLoggedIn } = useAuth();
+  const { checkIsLoggedIn, setTokenToStorage } = useAuth();
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { showErrorNotification, showSuccessNotification } = useNotification();
 
   const router = useRouter();
 
   useEffect(() => {
-    if (isLoggedIn()) {
+    const isAuthenticated = checkIsLoggedIn();
+
+    if (isAuthenticated) {
       router.replace(ROUTES.HOME);
     }
-  }, [isLoggedIn, router]);
+  }, [router, checkIsLoggedIn]);
 
   const loginForm = useForm<LoginForm>({
     defaultValues: initialValues,
@@ -54,22 +60,24 @@ export default function Login() {
     mode: "onBlur",
   });
 
-  const { setTokenToStorage } = useAuth();
-
-  const [isLoading, setIsLoading] = useState(false);
-
-  const { showErrorNotification, showSuccessNotification } = useNotification();
-
   const onSubmit: SubmitHandler<LoginForm> = (data: ILogin) => {
     setIsLoading(true);
-    login(data)
+    loginRequest(data)
       .then((res) => {
+        if (res.user.role === Role.STUDENT) {
+          showErrorNotification("Нет доступа к данному ресурсу");
+
+          return;
+        }
+
         setTokenToStorage(res.token);
 
         router.replace(ROUTES.HOME);
         showSuccessNotification();
       })
-      .catch(() => showErrorNotification("Неверный логин или пароль"))
+      .catch((error) => {
+        showErrorNotification("Неверный логин или пароль");
+      })
       .finally(() => setIsLoading(false));
   };
 

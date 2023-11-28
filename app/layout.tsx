@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Toaster } from "react-hot-toast";
 import { Inter } from "next/font/google";
-import "./globals.css";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryProvider } from "@/components/ReactQueryProvider/ReactQueryProvider";
+
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 

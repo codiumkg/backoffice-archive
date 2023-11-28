@@ -1,3 +1,6 @@
+import { StorageKeys } from "@/constants/storageKeys";
+import Cookie from "js-cookie";
+
 interface Options {
   url: string;
   method?: string;
@@ -18,11 +21,20 @@ export default async function request<T>({
   method = "GET",
   body,
 }: Options) {
+  let token;
+  if (typeof window === "undefined") {
+    const { cookies: serverCookies } = await import("next/headers");
+    token = serverCookies().get(StorageKeys.TOKEN)?.value;
+  } else {
+    const { default: clientCookies } = await import("js-cookie");
+    token = clientCookies.get(StorageKeys.TOKEN);
+  }
+
   const response = await fetch(url, {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${token}`,
     },
     method,
     body: JSON.stringify(body),

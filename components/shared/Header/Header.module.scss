@@ -1,0 +1,28 @@
+.wrapper {
+  position: fixed;
+  width: 100%;
+  padding: 16px;
+}
+
+.header {
+  width: 100%;
+  height: 70px;
+  background-color: var(--secondary-color);
+  border-radius: var(--extra-radius);
+  padding: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logout-button {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.logout {
+  margin-right: 8px;
+  font-size: 28px;
+}

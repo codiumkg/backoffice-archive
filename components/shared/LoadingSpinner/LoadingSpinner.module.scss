@@ -18,11 +18,17 @@
 .size-l {
   width: 52px;
   height: 52px;
+  border-width: 4px;
 }
 
 .size-xl {
-  width: 64px;
-  height: 64px;
+  width: 72px;
+  height: 72px;
+  border-width: 6px;
+}
+
+.light {
+  border-top-color: var(--accent-color);
 }
 
 @keyframes spin {

@@ -1,3 +1,5 @@
+import { ISubject } from "./subject";
+
 export enum Role {
   ADMIN = "ADMIN",
   STUDENT = "STUDENT",
@@ -9,11 +11,24 @@ export interface ILogin {
   password: string;
 }
 
+export interface IGroup {
+  id: number;
+  title: string;
+  subject: ISubject;
+}
+
 export interface IUserData {
   username: string;
   role: Role;
+  group: IGroup;
 }
 
 export interface ILoginResponse {
   token: string;
+  user: {
+    id: number;
+    username: string;
+    role: Role;
+    group: IGroup;
+  };
 }
