@@ -24,6 +24,12 @@
   padding-left: 16px;
 }
 
+.user {
+  padding: 12px 16px;
+  border: 1px solid var(--highlight-color);
+  border-radius: var(--extra-radius);
+}
+
 .logout-button {
   display: flex;
   align-items: center;
