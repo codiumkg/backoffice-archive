@@ -22,7 +22,7 @@ export default function Header() {
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
-        <div>
+        <div className={styles.logo}>
           <Typography variant="h2" color="var(--text-color)">
             Codium Office
           </Typography>

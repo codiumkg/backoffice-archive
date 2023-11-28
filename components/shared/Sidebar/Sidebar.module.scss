@@ -1,0 +1,33 @@
+.wrapper {
+  position: absolute;
+  top: 76px;
+  width: clamp(220px, 50vw, 320px);
+  height: 90vh;
+  padding: 16px;
+}
+
+.container {
+  background: var(--primary-color);
+  height: 100%;
+  border-radius: var(--primary-radius);
+  border: 1px solid var(--highlight-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  width: 100%;
+  padding: 16px;
+  //   border-bottom: 1px solid var(--highlight-color);
+  border-top-right-radius: var(--primary-radius);
+  border-top-left-radius: var(--primary-radius);
+  background: var(--secondary-color);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 6px;
+  overflow-y: scroll;
+}
