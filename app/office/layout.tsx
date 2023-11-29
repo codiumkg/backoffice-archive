@@ -1,4 +1,3 @@
-import Content from "@/components/shared/Content/Content";
 import Header from "@/components/shared/Header/Header";
 import Sidebar from "@/components/shared/Sidebar/Sidebar";
 import { ReactNode } from "react";
