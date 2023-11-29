@@ -1,0 +1,55 @@
+.wrapper {
+  width: 100%;
+  min-height: 100%;
+  padding-top: 32px;
+}
+
+.table {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.headerRow {
+  text-align: left;
+}
+
+.dataRow {
+  cursor: pointer;
+  transition: 0.3s ease-out;
+
+  //   border-bottom: 1px solid var(--highlight-color);
+
+  &:hover {
+    background: var(--highlight-color);
+  }
+}
+
+.dataCell {
+  padding: 20px;
+}
+
+.header {
+  width: 100%;
+  background: var(--secondary-color);
+  border-radius: var(--primary-radius);
+}
+
+.header-cell {
+  padding: 16px 20px;
+
+  &:first-child {
+    border-top-left-radius: var(--primary-radius);
+    border-bottom-left-radius: var(--primary-radius);
+  }
+
+  &:last-child {
+    border-top-right-radius: var(--primary-radius);
+    border-bottom-right-radius: var(--primary-radius);
+  }
+}
+
+.body {
+}

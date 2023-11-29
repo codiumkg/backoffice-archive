@@ -29,7 +29,7 @@ export default function ResourceList({ title, children }: Props) {
         </div>
       </div>
 
-      <div className={styles.content}></div>
+      <div className={styles.content}>{children}</div>
     </div>
   );
 }
