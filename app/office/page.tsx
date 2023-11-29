@@ -1,4 +1,3 @@
-import Typography from "@/components/shared/Typography/Typography";
 import { Role } from "@/interfaces/auth";
 import getUserData from "@/requests/auth/getUserData";
 import { redirect } from "next/navigation";

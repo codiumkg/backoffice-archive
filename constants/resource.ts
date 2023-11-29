@@ -38,16 +38,16 @@ export const RESOURCES: IResource[] = [
     href: "/lectures",
     roles: [Role.MANAGER],
   },
-  {
-    id: "tasks",
-    title: "Задания",
-    href: "/tasks",
-    roles: [Role.MANAGER],
-  },
-  {
-    id: "task-results",
-    title: "Результаты заданий",
-    href: "/task-results",
-    roles: [Role.MANAGER, Role.TEACHER],
-  },
+  // {
+  //   id: "tasks",
+  //   title: "Задания",
+  //   href: "/tasks",
+  //   roles: [Role.MANAGER],
+  // },
+  // {
+  //   id: "task-results",
+  //   title: "Результаты заданий",
+  //   href: "/task-results",
+  //   roles: [Role.MANAGER, Role.TEACHER],
+  // },
 ];
