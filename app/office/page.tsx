@@ -29,5 +29,5 @@ export default async function Office() {
     redirect(ROUTES.LOGIN);
   }
 
-  return <main className="flex-col center"></main>;
+  return redirect(ROUTES.REG_REQUESTS);
 }

@@ -1,9 +1,10 @@
 .wrapper {
-  position: absolute;
+  // position: fixed;
   top: 76px;
   width: clamp(220px, 50vw, 320px);
   height: 90vh;
   padding: 16px;
+  flex: 1;
 }
 
 .container {
