@@ -1,5 +1,4 @@
-import ResourceList from "@/components/ResourceList/ResourceList";
-import DataTable from "@/components/shared/DataTable/DataTable";
+import ResourceList from "@/components/shared/ResourceList/ResourceList";
 import { getGroups } from "@/requests/groups";
 
 async function fetchGroups() {
@@ -11,17 +10,5 @@ async function fetchGroups() {
 export default async function Groups() {
   const groups = await fetchGroups();
 
-  return (
-    <ResourceList title="Группы">
-      <DataTable
-        data={groups}
-        headers={[
-          { header: "ID", accessorKey: "id" },
-          { header: "Название", accessorKey: "title" },
-          { header: "Предмет", accessorKey: "subject" },
-          { header: "ID Предмета", accessorKey: "subjectId" },
-        ]}
-      />
-    </ResourceList>
-  );
+  return <ResourceList title="Группы"></ResourceList>;
 }

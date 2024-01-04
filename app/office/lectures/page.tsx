@@ -1,5 +1,4 @@
-import ResourceList from "@/components/ResourceList/ResourceList";
-import DataTable from "@/components/shared/DataTable/DataTable";
+import ResourceList from "@/components/shared/ResourceList/ResourceList";
 import { getLectures } from "@/requests/lectures";
 
 async function fetchLectures() {
@@ -9,17 +8,5 @@ async function fetchLectures() {
 export default async function Sections() {
   const lectures = await fetchLectures();
 
-  return (
-    <ResourceList title="Лекции">
-      <DataTable
-        data={lectures}
-        headers={[
-          { header: "ID", accessorKey: "id" },
-          { header: "Название", accessorKey: "title" },
-          { header: "Номер", accessorKey: "number" },
-          { header: "ID Топика", accessorKey: "topicId" },
-        ]}
-      />
-    </ResourceList>
-  );
+  return <ResourceList title="Лекции"></ResourceList>;
 }

@@ -5,8 +5,8 @@ import { ReactNode } from "react";
 import { IoMdListBox } from "react-icons/io";
 import { CiCirclePlus } from "react-icons/ci";
 
-import Typography from "../shared/Typography/Typography";
-import Button from "../shared/Button/Button";
+import Typography from "../Typography/Typography";
+import Button from "../Button/Button";
 
 import styles from "./ResourceList.module.scss";
 

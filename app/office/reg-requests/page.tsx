@@ -1,11 +1,16 @@
-import ResourceList from "@/components/ResourceList/ResourceList";
-import DataTable from "@/components/shared/DataTable/DataTable";
+import RegRequestsTable from "@/components/req-requests/RegRequestsTable";
+import ResourceList from "@/components/shared/ResourceList/ResourceList";
 import { getRegRequests } from "@/requests/reg-requests";
+import { redirect } from "next/navigation";
 
 async function fetchRegRequests() {
-  const regRequests = await getRegRequests();
+  try {
+    const regRequests = await getRegRequests();
 
-  return regRequests;
+    return regRequests;
+  } catch (error) {}
+
+  redirect("error");
 }
 
 export default async function Requests() {
@@ -13,15 +18,7 @@ export default async function Requests() {
 
   return (
     <ResourceList title="Заявки">
-      <DataTable
-        data={regRequests}
-        headers={[
-          { header: "ID", accessorKey: "id" },
-          { header: "Ф.И.О", accessorKey: "name" },
-          { header: "Телефон", accessorKey: "phone" },
-          { header: "Возраст", accessorKey: "age" },
-        ]}
-      />
+      <RegRequestsTable regRequests={regRequests} />
     </ResourceList>
   );
 }

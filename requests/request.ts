@@ -7,7 +7,7 @@ interface Options {
   body?: any;
 }
 
-class ApiError extends Error {
+export class ApiError extends Error {
   statusCode;
 
   constructor(message: string, statusCode: number) {
