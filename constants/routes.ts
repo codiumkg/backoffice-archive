@@ -4,6 +4,7 @@ export const ROUTES = {
   OFFICE: "/office",
   REG_REQUESTS: "/office/reg-requests",
   GROUPS: "/office/groups",
+  GROUP: "/office/group",
   SUBJECTS: "/office/subjects",
   SECTIONS: "/office/sections",
   LECTURES: "/office/lectures",

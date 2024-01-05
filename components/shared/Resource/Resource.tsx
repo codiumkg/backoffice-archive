@@ -1,10 +1,18 @@
-import { IResource } from "@/interfaces/resource";
+"use client";
+
 import styles from "./Resource.module.scss";
+import Typography from "../Typography/Typography";
 
 interface Props {
-  resource: IResource;
+  title: string;
 }
 
-export default function Resource({ resource }: Props) {
-  return <div className={styles.wrapper}></div>;
+export default function Resource({ title }: Props) {
+  return (
+    <div className={styles.wrapper}>
+      <div className={styles.header}>
+        <Typography>{title}</Typography>
+      </div>
+    </div>
+  );
 }

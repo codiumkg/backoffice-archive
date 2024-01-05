@@ -12,10 +12,15 @@ import styles from "./ResourceList.module.scss";
 
 interface Props {
   title: string;
+  onCreateClick?: () => void;
   children?: ReactNode;
 }
 
-export default function ResourceList({ title, children }: Props) {
+export default function ResourceList({
+  title,
+  children,
+  onCreateClick,
+}: Props) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
@@ -25,7 +30,12 @@ export default function ResourceList({ title, children }: Props) {
         </div>
 
         <div className={styles.buttons}>
-          <Button text="Добавить" height="36px" icon={<CiCirclePlus />} />
+          <Button
+            text="Добавить"
+            height="36px"
+            icon={<CiCirclePlus />}
+            onClick={onCreateClick}
+          />
         </div>
       </div>
 
