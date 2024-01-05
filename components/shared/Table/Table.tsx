@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 import cn from "classnames";
 
 import styles from "./Table.module.scss";
+import Button from "../Button/Button";
 
 interface Props {
   headers: ITableHeader[];
@@ -21,6 +22,31 @@ export default function Table({ headers, children }: Props) {
       </div>
 
       <div>{children}</div>
+    </div>
+  );
+}
+
+interface TableRowProps {
+  children: ReactNode;
+}
+
+export function TableRow({ children }: TableRowProps) {
+  return (
+    <div className={styles.row}>
+      <div className={styles.content}>{children}</div>
+    </div>
+  );
+}
+
+interface TableColumnProps {
+  flex?: number;
+  children: ReactNode;
+}
+
+export function TableColumn({ flex = 1, children }: TableColumnProps) {
+  return (
+    <div className={styles.column} style={{ flex }}>
+      {children}
     </div>
   );
 }

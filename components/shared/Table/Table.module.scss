@@ -14,5 +14,26 @@
 }
 
 .column {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.row {
+  width: 100%;
+  padding: 16px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    background: var(--highlight-color);
+    transition: background 0.4s ease-out;
+  }
+}
+
+.content {
+  display: flex;
   flex: 1;
 }
