@@ -1,7 +1,7 @@
 "use client";
 import { IGroup } from "@/interfaces/group";
-import ResourceList from "../shared/ResourceList/ResourceList";
-import Table, { TableColumn, TableRow } from "../shared/Table/Table";
+import ResourceList from "@/components/shared/ResourceList/ResourceList";
+import Table, { TableColumn, TableRow } from "@/components/shared/Table/Table";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/constants/routes";
 

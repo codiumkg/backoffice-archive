@@ -1,0 +1,13 @@
+.container {
+  width: 100%;
+  min-height: 46px;
+  padding: 8px 16px;
+  background: var(--primary-color);
+  border-radius: var(--primary-radius);
+  margin-bottom: 16px;
+
+  label {
+    font-size: 12px;
+    font-weight: 300;
+  }
+}

@@ -1,4 +1,4 @@
-import GroupsList from "@/components/group/GroupsList";
+import GroupsList from "@/pages/group/components/GroupsList";
 import { getGroups } from "@/requests/groups";
 
 async function fetchGroups() {
