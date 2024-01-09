@@ -12,34 +12,41 @@ interface Props {
   options: { label: string; value: string }[];
   errorMessage?: string;
   withSearch?: boolean;
+  onSearch?: (value: string) => void;
+  onClick?: () => void;
   placeholder?: string;
+  activeValue: { label?: string; value?: string };
 }
 
 function CustomSelect({
   options,
   label,
   name,
+  activeValue,
   errorMessage,
+  onSearch,
   withSearch = false,
   placeholder,
+  onClick,
 }: Props) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const handleClick = () => {
-    if (withSearch) {
-      setIsMenuOpen(true);
-    }
-  };
-
   return (
     <div>
-      <div className={styles.container} onClick={handleClick}>
+      <div className={styles.container} onClick={onClick}>
         {!!label && <label htmlFor={name}>{label}</label>}
 
         {withSearch ? (
-          <CustomInput name={name} placeholder={placeholder} />
+          <CustomInput
+            name={name}
+            placeholder={placeholder}
+            onChangeCallback={(value) => onSearch?.(value)}
+            value={activeValue.label}
+          />
         ) : (
-          <select></select>
+          <select>
+            {options.map((option, index) => (
+              <option key={index}>{option.value}</option>
+            ))}
+          </select>
         )}
       </div>
       <div className={styles.error}>
@@ -47,13 +54,6 @@ function CustomSelect({
           {errorMessage}
         </Typography>
       </div>
-
-      {isMenuOpen && withSearch && (
-        <Dropdown
-          items={[{ label: "test", value: "test" }]}
-          onClose={() => setIsMenuOpen(false)}
-        />
-      )}
     </div>
   );
 }

@@ -4,13 +4,13 @@ import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 interface Props {
   items: { label: string; value: string }[];
-  onSelect?: (value: string) => void;
+  onSelect?: (value: { label: string; value: string }) => void;
   onClose: () => void;
   isLoading?: boolean;
 }
 
 function Dropdown({ items, onClose, onSelect, isLoading = false }: Props) {
-  const handleSelect = (value: string) => {
+  const handleSelect = (value: { label: string; value: string }) => {
     onSelect?.(value);
     onClose();
   };
@@ -24,7 +24,7 @@ function Dropdown({ items, onClose, onSelect, isLoading = false }: Props) {
           <div
             key={index}
             className={styles.item}
-            onClick={() => handleSelect(item.value)}
+            onClick={() => handleSelect(item)}
           >
             {item.label}
           </div>

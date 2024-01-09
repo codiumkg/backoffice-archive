@@ -1,10 +1,12 @@
 import { StorageKeys } from "@/constants/storageKeys";
+import axios from "axios";
 import Cookie from "js-cookie";
 
 interface Options {
   url: string;
   method?: string;
   body?: any;
+  params?: any;
 }
 
 export class ApiError extends Error {
@@ -20,6 +22,7 @@ export default async function request<T>({
   url,
   method = "GET",
   body,
+  params,
 }: Options) {
   let token;
   if (typeof window === "undefined") {
@@ -30,7 +33,9 @@ export default async function request<T>({
     token = clientCookies.get(StorageKeys.TOKEN);
   }
 
-  const response = await fetch(url, {
+  const paramString = "?" + new URLSearchParams(params).toString();
+
+  const response = await fetch(`${url}${paramString}`, {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
