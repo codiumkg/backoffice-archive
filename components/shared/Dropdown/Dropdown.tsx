@@ -1,6 +1,6 @@
-import { ReactNode, useState } from "react";
 import styles from "./Dropdown.module.scss";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import Typography from "../Typography/Typography";
 
 interface Props {
   items: { label: string; value: string }[];
@@ -26,7 +26,7 @@ function Dropdown({ items, onClose, onSelect, isLoading = false }: Props) {
             className={styles.item}
             onClick={() => handleSelect(item)}
           >
-            {item.label}
+            <Typography variant="body2">{item.label}</Typography>
           </div>
         ))}
 

@@ -12,7 +12,7 @@ interface Options {
 export class ApiError extends Error {
   statusCode;
 
-  constructor(message: string, statusCode: number) {
+  constructor(message: string, statusCode?: number) {
     super(message);
     this.statusCode = statusCode;
   }
@@ -52,7 +52,11 @@ export default async function request<T>({
     throw new ApiError("Пожалуйста авторизуйтесь", 401);
   }
 
-  const data = await response.json();
+  if (response.status === 200 || response.status === 201) {
+    const data = await response.json();
 
-  return data as T;
+    return data as T;
+  }
+
+  throw new ApiError("Неизвестная ошибка");
 }

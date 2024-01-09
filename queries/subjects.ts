@@ -1,7 +1,9 @@
 import { QUERY_KEYS } from "@/constants/queryKeys";
+import { IGroupCreate } from "@/interfaces/group";
 import { ISubject } from "@/interfaces/subject";
+import { createGroup } from "@/requests/groups";
 import { getSubjects } from "@/requests/subjects";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 interface QueryParams {
   params?: any;
@@ -26,4 +28,3 @@ export const useSubjects = ({ params, enabled }: QueryParams) => {
     refetch,
   };
 };
-2;

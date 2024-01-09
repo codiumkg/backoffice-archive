@@ -15,6 +15,6 @@ export function createSubject(data: ISubject) {
   return request<ISubject>({
     method: "POST",
     url: API_SUBJECTS,
-    body: JSON.stringify(data),
+    body: data,
   });
 }

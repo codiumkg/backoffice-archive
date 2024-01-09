@@ -8,5 +8,5 @@ export interface IGroup {
 
 export interface IGroupCreate {
   title: string;
-  subject: number;
+  subjectId: number;
 }

@@ -10,6 +10,6 @@ export function createTopic(data: ITopic) {
   return request<ITopic>({
     method: "POST",
     url: API_TOPICS,
-    body: JSON.stringify(data),
+    body: data,
   });
 }

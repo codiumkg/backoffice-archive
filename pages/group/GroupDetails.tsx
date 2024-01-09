@@ -4,7 +4,9 @@ import Button from "@/components/shared/Button/Button";
 import CustomInput from "@/components/shared/CustomInput/CustomInput";
 import RelationInput from "@/components/shared/RelationInput/RelationInput";
 import Resource from "@/components/shared/Resource/Resource";
+import { useNotification } from "@/hooks/useNotification";
 import { IGroupCreate } from "@/interfaces/group";
+import { useGroupMutation } from "@/queries/groups";
 import { useSubjects } from "@/queries/subjects";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useParams } from "next/navigation";
@@ -17,17 +19,17 @@ export const groupValidationSchema = Yup.object({
     .min(3, "Название должно быть не менее 3 символов")
     .max(32, "Название должно быть не более 32 символов")
     .required("Это поле обязательное"),
-  subject: Yup.number().nullable().required(),
+  subjectId: Yup.number().nullable().required(),
 });
 
 const initialValues = {
   title: "",
-  subject: 0,
+  subjectId: 0,
 };
 
 interface GroupForm {
   title: string;
-  subject: number;
+  subjectId: number;
 }
 
 function GroupDetails() {
@@ -35,12 +37,23 @@ function GroupDetails() {
 
   const [search, setSearch] = useState("");
 
+  const { showSuccessNotification, showErrorNotification } = useNotification();
+
   const {
     data: subjects,
     isFetching,
     refetch,
   } = useSubjects({
     params: { search },
+  });
+
+  const { mutate: createGroup, isPending } = useGroupMutation({
+    onSuccess: () => {
+      showSuccessNotification();
+    },
+    onError: () => {
+      showErrorNotification();
+    },
   });
 
   const [activeValue, setActiveValue] = useState<{
@@ -66,21 +79,22 @@ function GroupDetails() {
     mode: "onBlur",
   });
 
-  const { isDirty, isValid } = groupForm.formState;
+  const isValid = Object.values(groupForm.formState.errors).length === 0;
 
-  const onSubmit: SubmitHandler<GroupForm> = (data: IGroupCreate) => {};
+  const onSubmit: SubmitHandler<GroupForm> = (data: IGroupCreate) => {
+    createGroup(data);
+  };
 
   useEffect(() => {
     setActiveValue({
       label: subjects?.[0].title,
       value: subjects?.[0].id.toString(),
     });
-  }, [subjects]);
 
-  const valueToSet = useMemo(
-    () => subjects?.find((subject) => subject.id === +activeValue)?.title || "",
-    [subjects, activeValue]
-  );
+    if (subjects) {
+      groupForm.setValue("subjectId", subjects[0].id);
+    }
+  }, [subjects, groupForm]);
 
   return (
     <Resource title="Группа">
@@ -89,12 +103,18 @@ function GroupDetails() {
           name="title"
           label="Название"
           placeholder="Введите название..."
+          onChangeCallback={(value) => {
+            groupForm.setValue("title", value);
+          }}
         />
         <RelationInput
           name="subject"
           options={subjectOptions}
           activeValue={activeValue}
-          setActiveValue={(value) => setActiveValue(value)}
+          setActiveValue={(value) => {
+            groupForm.setValue("subjectId", +value.value);
+            setActiveValue(value);
+          }}
           label="Предмет"
           placeholder="Выберите предмет..."
           isLoading={isFetching}
@@ -104,7 +124,12 @@ function GroupDetails() {
           }}
         />
 
-        <Button type="submit" text="Создать" disabled={!isValid || !isDirty} />
+        <Button
+          type="submit"
+          text="Создать"
+          disabled={!isValid}
+          isLoading={isPending}
+        />
       </form>
     </Resource>
   );
