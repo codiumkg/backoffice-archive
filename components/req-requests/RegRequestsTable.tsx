@@ -1,5 +1,7 @@
 import { IRegRequest } from "@/interfaces/regRequest";
 import Table, { TableRow, TableColumn } from "../shared/Table/Table";
+import dayjs from "dayjs";
+import { DATE_FORMAT } from "@/constants/common";
 
 interface Props {
   regRequests: IRegRequest[];
@@ -13,6 +15,7 @@ export default function RegRequestsTable({ regRequests }: Props) {
         { title: "Ф.И.О" },
         { title: "Телефон" },
         { title: "Возраст" },
+        { title: "Создан" },
       ]}
     >
       {regRequests.map((request) => (
@@ -21,6 +24,9 @@ export default function RegRequestsTable({ regRequests }: Props) {
           <TableColumn>{request.name}</TableColumn>
           <TableColumn>{request.phone}</TableColumn>
           <TableColumn>{request.age}</TableColumn>
+          <TableColumn>
+            {dayjs(request.createdAt).format(DATE_FORMAT)}
+          </TableColumn>
         </TableRow>
       ))}
     </Table>

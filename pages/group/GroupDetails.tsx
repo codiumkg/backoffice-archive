@@ -2,7 +2,7 @@
 
 import Button from "@/components/shared/Button/Button";
 import CustomInput from "@/components/shared/CustomInput/CustomInput";
-import CustomSelect from "@/components/shared/CustomSelect/CustomSelect";
+import RelationInput from "@/components/shared/RelationInput/RelationInput";
 import Resource from "@/components/shared/Resource/Resource";
 import { IGroupCreate } from "@/interfaces/group";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -29,7 +29,7 @@ interface GroupForm {
 }
 
 function GroupDetails() {
-  const { id } = useParams();
+  // const { id } = useParams();
 
   const groupForm = useForm<GroupForm>({
     defaultValues: initialValues,
@@ -44,8 +44,17 @@ function GroupDetails() {
   return (
     <Resource title="Группа">
       <form onSubmit={groupForm.handleSubmit(onSubmit)}>
-        <CustomInput name="title" label="Название" />
-        <CustomSelect name="subject" options={[]} label="Предмет" />
+        <CustomInput
+          name="title"
+          label="Название"
+          placeholder="Введите название..."
+        />
+        <RelationInput
+          name="subject"
+          options={[{ label: "test", value: "test" }]}
+          label="Предмет"
+          placeholder="Выберите предмет..."
+        />
 
         <Button type="submit" text="Создать" disabled={!isValid || !isDirty} />
       </form>
