@@ -1,9 +1,6 @@
 .container {
   width: 100%;
   min-height: 46px;
-  padding: 8px 16px;
-  background: var(--primary-color);
-  border-radius: var(--primary-radius);
   margin-bottom: 16px;
 
   label {
@@ -15,8 +12,10 @@
     font-size: 14px;
     font-weight: 500;
     outline: none;
-    background: none;
+    background: var(--primary-color);
+    padding: 16px;
     border: none;
+    border-radius: var(--secondary-radius);
     height: 100%;
     width: 100%;
     margin: 6px 0;
@@ -26,5 +25,5 @@
 
 .error {
   margin-left: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }

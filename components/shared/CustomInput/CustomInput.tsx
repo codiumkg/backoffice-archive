@@ -14,11 +14,22 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   placeholder?: string;
   label?: string;
   errorMessage?: string;
+  onChangeCallback?: (value: string) => void;
 }
 
 const CustomInput: FC<Props> = forwardRef<HTMLInputElement, Props>(
   function Input(
-    { value, name, placeholder, label, type, errorMessage, onChange, onBlur },
+    {
+      value,
+      name,
+      placeholder,
+      label,
+      type,
+      errorMessage,
+      onChange,
+      onBlur,
+      onChangeCallback,
+    },
     ref?
   ) {
     return (
@@ -28,11 +39,15 @@ const CustomInput: FC<Props> = forwardRef<HTMLInputElement, Props>(
           <input
             ref={ref}
             name={name}
-            onChange={onChange}
+            onChange={(e) => {
+              onChange?.(e);
+              onChangeCallback?.(e.target.value);
+            }}
             onBlur={onBlur}
             value={value}
             placeholder={placeholder}
             type={type}
+            autoComplete="off"
           />
         </div>
 

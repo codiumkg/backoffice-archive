@@ -10,6 +10,6 @@ export function createSection(data: ISection) {
   return request<ISection>({
     method: "POST",
     url: API_SECTIONS,
-    body: JSON.stringify(data),
+    body: data,
   });
 }

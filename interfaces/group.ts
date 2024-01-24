@@ -5,3 +5,8 @@ export interface IGroup {
   title: string;
   subject: ISubject;
 }
+
+export interface IGroupCreate {
+  title: string;
+  subjectId: number;
+}

@@ -1,16 +1,18 @@
 import { StorageKeys } from "@/constants/storageKeys";
+import axios from "axios";
 import Cookie from "js-cookie";
 
 interface Options {
   url: string;
   method?: string;
   body?: any;
+  params?: any;
 }
 
 export class ApiError extends Error {
   statusCode;
 
-  constructor(message: string, statusCode: number) {
+  constructor(message: string, statusCode?: number) {
     super(message);
     this.statusCode = statusCode;
   }
@@ -20,6 +22,7 @@ export default async function request<T>({
   url,
   method = "GET",
   body,
+  params,
 }: Options) {
   let token;
   if (typeof window === "undefined") {
@@ -30,7 +33,9 @@ export default async function request<T>({
     token = clientCookies.get(StorageKeys.TOKEN);
   }
 
-  const response = await fetch(url, {
+  const paramString = "?" + new URLSearchParams(params).toString();
+
+  const response = await fetch(`${url}${paramString}`, {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -47,7 +52,11 @@ export default async function request<T>({
     throw new ApiError("Пожалуйста авторизуйтесь", 401);
   }
 
-  const data = await response.json();
+  if (response.status === 200 || response.status === 201) {
+    const data = await response.json();
 
-  return data as T;
+    return data as T;
+  }
+
+  throw new ApiError("Неизвестная ошибка");
 }

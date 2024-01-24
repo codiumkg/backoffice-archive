@@ -10,6 +10,6 @@ export function createLecture(data: ILecture) {
   return request<ILecture>({
     method: "POST",
     url: API_LECTURES,
-    body: JSON.stringify(data),
+    body: data,
   });
 }
